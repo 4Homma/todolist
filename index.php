@@ -7,7 +7,7 @@
 <body>
 <?php
 try{
-  $db = new PDO('mysql:dbname=todolist;host=localhost');
+  $dsn = 'mysql:dbname=todolist;host=localhost';
   $user ='root';
   $password='';
   $dbh = new PDO($dsn,$user,$password);
@@ -20,16 +20,23 @@ try{
 
 if(isset($_GET['add'])){
   $item = $_GET['item'];
+  
 }
 
  ?>
 <h1>Todoリスト</h1>
-<form action="index.php" method="post">
-<ul>
-    <li><span>タスク名</span><input type="text" name="taskName"></li>
-    <li><span>メモ</span><textarea name="memo"></textarea></li>
-    <li><input type="submit" name="submit"></li>
-</ul>
+<form action="index.php" method="get">
+  <input type="text" name="item"><input type="submit" name="add" value="add">
 </form>
+<ul>
+  <?php
+  $sql = 'SELECT id, item FROM list;';
+  $stmt = $dbh->prepare($sql);
+  $stmt->execute();
+  while($task = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo '<li>'.$task['item'].'</li>';
+  }
+  ?>
+</ul>
 </body>
 </html>
