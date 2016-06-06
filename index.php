@@ -9,7 +9,7 @@
 try{
   $db = new PDO('mysql:dbname=todolist;host=localhost');
   $user ='root';
-  $password='root';
+  $password='';
   $dbh = new PDO($dsn,$user,$password);
   $dbh->query('SET NAMES utf8');
   $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
