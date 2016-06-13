@@ -18,10 +18,17 @@ try{
   die('エラーメッセージ：'.$e->getMessage());
 }
 
+
 if(isset($_GET['add'])){
-  $item = $_GET['item'];
-  
+  $text = $_GET['item'];
+$text = htmlspecialchars($text, ENT_QUOTES);
+$stmt = $dbh->prepare('INSERT INTO list(item) VALUES(:text)');
+$stmt->bindValue(':text',$text);
+$stmt-> execute();
+unset($stt);
 }
+
+
 
  ?>
 <h1>Todoリスト</h1>
@@ -36,6 +43,7 @@ if(isset($_GET['add'])){
   while($task = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<li>'.$task['item'].'</li>';
   }
+  $dbh = null;
   ?>
 </ul>
 </body>
